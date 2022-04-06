@@ -1,37 +1,16 @@
-from django.http import Http404
 from .serializers import CustomerSerializer
 from .models import Customer
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework import mixins, generics
 
 
-class CustomerList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-
+class CustomerList(generics.ListCreateAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
-    def get(self, request):
-        return self.list(request)
 
-    def post(self, request):
-        return self.create(request)
-
-
-class CustomerDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
-
+class CustomerDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-
-    def get(self, request, pk):
-        return self.retrieve(request)
-
-    def put(self, request, pk):
-        return self.update(request)
-
-    def delete(self, request, pk):
-        return self.destroy(request)
 
     # def get_customer(self, pk):
     #     try:
@@ -56,7 +35,6 @@ class CustomerDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins
     #     customer = self.get_customer()
     #     customer.delete()
     #     return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 # @api_view(['GET','POST'])
 # def customer_list(request):
