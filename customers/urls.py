@@ -2,6 +2,6 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-    path('', views.customer_list),
+    path('', views.CustomerList.as_view()),
     path('<int:pk>', views.customer_details)
 ]
